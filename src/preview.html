@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Гео-приват — предпросмотр</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* только для предпросмотра: фон-«обои», чтобы было видно стекло */
+    body { background:
+      radial-gradient(1200px 700px at 20% 10%, #3a2a6b, transparent 60%),
+      radial-gradient(1000px 800px at 90% 90%, #1f6f6b, transparent 55%),
+      linear-gradient(135deg, #1b1f2e, #0e1018); }
+    .stage { width: 400px; height: 600px; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+  <div class="widget" id="widget">
+    <header class="titlebar" id="dragbar">
+      <div class="brand"><span class="logo">◎</span><span class="title">Гео-приват</span></div>
+      <div class="win-controls">
+        <button class="wc" id="opacityBtn" title="Прозрачность фона">◐</button>
+        <button class="wc pinned" id="pinBtn" title="Поверх всех окон">📌</button>
+        <button class="wc" id="minBtn" title="Свернуть">—</button>
+        <button class="wc wc-close" id="closeBtn" title="Закрыть">✕</button>
+      </div>
+    </header>
+    <div class="opacity-pop" id="opacityPop">
+      <div class="op-label">Прозрачность фона <b id="opacityVal">72%</b></div>
+      <input type="range" id="opacityRange" min="25" max="100" value="72" />
+      <div class="op-presets">
+        <button class="preset" data-v="40">Лёгкая</button>
+        <button class="preset" data-v="70">Средняя</button>
+        <button class="preset" data-v="95">Плотная</button>
+      </div>
+    </div>
+    <section class="card geo-card">
+      <div class="geo-main">
+        <div class="flag" id="geoFlag">🌐</div>
+        <div class="geo-text">
+          <div class="geo-country" id="geoCountry">Определяю…</div>
+          <div class="geo-tz" id="geoTz">—</div>
+        </div>
+        <div class="geo-clock" id="geoClock">--:--:--</div>
+      </div>
+      <div class="geo-foot">
+        <span class="geo-src" id="geoSource">по системной таймзоне</span>
+        <button class="link-btn" id="ipBtn">Уточнить по IP</button>
+      </div>
+      <p class="note">Системные часы не изменяются — показывается только информация.</p>
+    </section>
+    <section class="card audit-card">
+      <div class="card-head"><h2>Доступ к геолокации</h2>
+        <button class="icon-btn" id="refreshBtn" title="Обновить">⟳</button></div>
+      <div class="legend">
+        <span class="lg"><i class="dot allow"></i>разрешено</span>
+        <span class="lg"><i class="dot deny"></i>запрещено</span>
+        <span class="lg"><i class="dot prompt"></i>спрашивать</span>
+        <span class="lg"><i class="dot live"></i>сейчас активно</span>
+      </div>
+      <div class="audit-list" id="auditList"><div class="empty" id="auditEmpty">…</div></div>
+    </section>
+    <footer class="footer">
+      <button class="ghost-btn" id="settingsBtn">Настройки Windows</button>
+      <span class="footer-note">Ничего не блокируется скрытно</span>
+    </footer>
+  </div>
+  </div>
+
+  <script>
+    // Мок реального API (только для предпросмотра дизайна)
+    const now = new Date();
+    window.geoWidget = {
+      localGeo: async () => ({ ok:true, timeZone:'Europe/Moscow', country:{code:'RU',name:'Россия',flag:'🇷🇺'} }),
+      ipGeo: async () => ({ ok:true, timeZone:'Europe/Moscow', country:{code:'RU',name:'Россия',flag:'🇷🇺'} }),
+      listAudit: async () => ({ ok:true, items:[
+        { id:'1', type:'win32', display:'chrome.exe', path:'C:\\Program Files\\Google\\Chrome\\chrome.exe',
+          value:'Allow', lastStart:now.toISOString(), lastStop:null, inUse:true, canToggle:true,
+          regPath:'HKEY_CURRENT_USER\\...\\chrome' },
+        { id:'2', type:'packaged', display:'Microsoft.BingWeather_8wekyb3d8bbwe',
+          value:'Allow', lastStart:new Date(Date.now()-3600e3).toISOString(), lastStop:new Date(Date.now()-3500e3).toISOString(),
+          inUse:false, canToggle:true, regPath:'HKEY_CURRENT_USER\\...\\weather' },
+        { id:'3', type:'packaged', display:'5319275A.WhatsAppDesktop_cv1g1gvanyjgm',
+          value:'Prompt', lastStart:null, lastStop:null, inUse:false, canToggle:true, regPath:'HKEY_CURRENT_USER\\...\\wa' },
+        { id:'4', type:'win32', display:'Telegram.exe', path:'C:\\Users\\me\\AppData\\Roaming\\Telegram\\Telegram.exe',
+          value:'Deny', lastStart:new Date(Date.now()-864e5).toISOString(), lastStop:new Date(Date.now()-864e5+2000).toISOString(),
+          inUse:false, canToggle:true, regPath:'HKEY_CURRENT_USER\\...\\tg' },
+        { id:'5', type:'global', display:'Системный доступ', value:'Allow', lastStart:null, lastStop:null,
+          inUse:false, canToggle:false, regPath:'HKCU...' },
+      ]}),
+      setPermission: async (_p, v) => ({ ok:true, value:v }),
+      openLocationSettings: async () => ({ ok:true }),
+      close(){}, minimize(){}, togglePin: async()=>true,
+    };
+  </script>
+  <script src="renderer.js"></script>
+</body>
+</html>

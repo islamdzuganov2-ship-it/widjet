@@ -1,0 +1,15 @@
+{
+  "name": "geo-privacy-widget",
+  "version": "1.0.0",
+  "description": "Современный стеклянный десктоп-виджет: аудит запросов геолокации, управление разрешениями через штатные механизмы Windows, показ страны/таймзоны без правки системных часов.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "audit": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/location-audit.ps1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

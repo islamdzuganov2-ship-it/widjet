@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>Гео-приват</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="widget" id="widget">
+    <!-- Шапка / зона перетаскивания -->
+    <header class="titlebar" id="dragbar">
+      <div class="brand">
+        <span class="logo">◎</span>
+        <span class="title">Гео-приват</span>
+      </div>
+      <div class="win-controls">
+        <button class="wc" id="opacityBtn" title="Прозрачность фона">◐</button>
+        <button class="wc" id="pinBtn" title="Поверх всех окон">📌</button>
+        <button class="wc" id="minBtn" title="Свернуть">—</button>
+        <button class="wc wc-close" id="closeBtn" title="Закрыть">✕</button>
+      </div>
+    </header>
+
+    <!-- Регулятор прозрачности фона -->
+    <div class="opacity-pop" id="opacityPop">
+      <div class="op-label">Прозрачность фона <b id="opacityVal">72%</b></div>
+      <input type="range" id="opacityRange" min="25" max="100" value="72" />
+      <div class="op-presets">
+        <button class="preset" data-v="40">Лёгкая</button>
+        <button class="preset" data-v="70">Средняя</button>
+        <button class="preset" data-v="95">Плотная</button>
+      </div>
+    </div>
+
+    <!-- Карточка: страна / таймзона -->
+    <section class="card geo-card">
+      <div class="geo-main">
+        <div class="flag" id="geoFlag">🌐</div>
+        <div class="geo-text">
+          <div class="geo-country" id="geoCountry">Определяю…</div>
+          <div class="geo-tz" id="geoTz">—</div>
+        </div>
+        <div class="geo-clock" id="geoClock">--:--:--</div>
+      </div>
+      <div class="geo-foot">
+        <span class="geo-src" id="geoSource">по системной таймзоне</span>
+        <button class="link-btn" id="ipBtn">Уточнить по IP</button>
+      </div>
+      <p class="note">Системные часы не изменяются — показывается только информация.</p>
+    </section>
+
+    <!-- Карточка: аудит запросов геолокации -->
+    <section class="card audit-card">
+      <div class="card-head">
+        <h2>Доступ к геолокации</h2>
+        <button class="icon-btn" id="refreshBtn" title="Обновить">⟳</button>
+      </div>
+      <div class="legend">
+        <span class="lg"><i class="dot allow"></i>разрешено</span>
+        <span class="lg"><i class="dot deny"></i>запрещено</span>
+        <span class="lg"><i class="dot prompt"></i>спрашивать</span>
+        <span class="lg"><i class="dot live"></i>сейчас активно</span>
+      </div>
+      <div class="audit-list" id="auditList">
+        <div class="empty" id="auditEmpty">Загрузка журнала Windows…</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <button class="ghost-btn" id="settingsBtn">Настройки Windows</button>
+      <span class="footer-note">Ничего не блокируется скрытно</span>
+    </footer>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
