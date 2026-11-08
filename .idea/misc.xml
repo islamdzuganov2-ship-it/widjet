@@ -1,0 +1,8 @@
+<project version="4">
+  <component name="Black">
+    <option name="sdkName" value="Python 3.12 (widjet)" />
+  </component>
+  <component name="ProjectRootManager" version="2">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
